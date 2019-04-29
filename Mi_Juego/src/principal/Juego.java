@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -16,54 +18,63 @@ public class Juego extends Canvas implements Runnable{
     private static final Toolkit TK = Toolkit.getDefaultToolkit();
     private static final int ANCHO = ((int) TK.getScreenSize().getWidth());
     private static final int ALTO = ((int) TK.getScreenSize().getHeight());
+    
+    //Variable para saber si el juego esta corriendo
+    private static volatile boolean enFuncionamiento = false;
+    
     //Nombre de la ventana
     private static final String NOMBRE ="Juego";
+    
     //Creación de variable "ventana"
     private static JFrame ventana;
+        
     //Creamos un nuevo hilo
-    private static Thread graficos;
+    private static Thread hiloGraficos;
     
     //Constructor de Juego
     private Juego(){
-        //Ingreso de dimensión de la ventana
+        //Características de la ventana y se muestra en pantalla
         setPreferredSize(new Dimension(ANCHO, ALTO));
-        //Ingreso del nombre de la ventana
         ventana = new JFrame(NOMBRE);
-        //Para cerrar totalmente la aplicación al presionar "x"
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Ventana no redimensionable
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Quizas no necesario
         ventana.setResizable(false);
-        //Organización de la ventana
         ventana.setLayout(new BorderLayout());
-        //Añadimos canvas en el centro de la ventana
         ventana.add(this, BorderLayout.CENTER);
         //Sin adornos en la ventana
         //ventana.setUndecorated(true);
-        //Método para contenido se ajuste al tamaño de la ventana
         ventana.pack();
-        //Ventana en centro de escritorio
         ventana.setLocationRelativeTo(null);
-        //Ventana visible
         ventana.setVisible(true);
-        
     }
     
-    //Método Main
+    //Método Principal
     public static void main(String[] args){
         Juego juego = new Juego();
         juego.iniciar();
     }
     
-    private void iniciar(){
-        graficos = new Thread(this,"Graficos");
-        graficos.start();
+    //Método para iniciar juego
+    private synchronized void iniciar(){
+        enFuncionamiento = true;
+        
+        hiloGraficos = new Thread(this,"Graficos");
+        hiloGraficos.start();
     }
     
-    private void detener(){
+    //Método para detener juego
+    private synchronized void detener(){
+        enFuncionamiento = false;
         
+        try {
+            hiloGraficos.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void run() {
-        System.out.println("Graficos");
+        while(enFuncionamiento){
+            
+        }
     }
 }
