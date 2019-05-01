@@ -10,8 +10,9 @@ public class Sprite {
     private int x;
     private int y;
     
-    public int[] pixeles;
     private final HojaSprites hoja;
+    public int[] pixeles;
+    
     
     //Constructor "Sprite"
     public Sprite(final int lado, final int columna, final int fila, final HojaSprites hoja){
@@ -26,7 +27,7 @@ public class Sprite {
         //Obtención de los valores del "Sprite"
         for (int j = 0; j < lado; j++) {
             for (int i = 0; i < 10; i++) {
-                pixeles[i + j * lado] = hoja.pixeles[(i + this.x) + (j + this.y) * hoja.getAncho()];
+                pixeles[i + j * lado] = hoja.pixeles[(i + this.x) + (j + this.y) * this.hoja.getAncho()];
             }
         }
     }
