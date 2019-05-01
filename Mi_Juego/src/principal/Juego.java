@@ -1,5 +1,6 @@
 package principal;
 
+import controles.Teclado;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -23,7 +24,7 @@ public class Juego extends Canvas implements Runnable{
     private static volatile boolean enFuncionamiento = false;
     
     //Nombre de la ventana
-    private static final String NOMBRE ="Juego";
+    private static final String NOMBRE ="Final War";
     
     //Variables "aps" y "fps"
     private static int aps = 0;
@@ -32,11 +33,18 @@ public class Juego extends Canvas implements Runnable{
     //Creación de variable "ventana"
     private static JFrame ventana;
         
-    //Creamos un nuevo hilo
+    //Creción de nuevo hilo
     private static Thread hiloGraficos;
+    
+    //Creación clase teclado
+    private static Teclado teclado;
     
     //Constructor de Juego
     private Juego(){
+        //Inicialización del teclado y detección de teclas
+        teclado = new Teclado();
+        addKeyListener(teclado);
+        
         //Características de la ventana y se muestra en pantalla
         setPreferredSize(new Dimension(ANCHO, ALTO));
         ventana = new JFrame(NOMBRE);
@@ -77,6 +85,21 @@ public class Juego extends Canvas implements Runnable{
     }
     
     private void actualizar(){
+        teclado.actualizar();
+        
+        if(teclado.arriba){
+            System.out.println("Arriba");
+        }
+        if(teclado.abajo){
+            System.out.println("Abajo");
+        }
+        if(teclado.derecha){
+            System.out.println("Derecha");
+        }
+        if(teclado.izquierda){
+            System.out.println("Izquierda");
+        }
+        
         aps++;
     }
     
@@ -94,6 +117,8 @@ public class Juego extends Canvas implements Runnable{
         
         double tiempoTranscurrido;
         double delta = 0;
+        
+        requestFocus();
         
         while(enFuncionamiento){
             final long inicioBucle = System.nanoTime();
