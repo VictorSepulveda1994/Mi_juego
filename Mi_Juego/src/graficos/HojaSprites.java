@@ -31,4 +31,10 @@ public class HojaSprites {
             Logger.getLogger(HojaSprites.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int getAncho() {
+        return ancho;
+    }
+    
+    
 }
