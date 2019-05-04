@@ -13,6 +13,9 @@ public class Sprite {
     private final HojaSprites hoja;
     public int[] pixeles;
     
+    //Colección de sprites
+    public static Sprite agua = new Sprite(32, 2, 1, HojaSprites.texturasV1);
+    //Fín de la colección
     
     //Constructor "Sprite"
     public Sprite(final int lado, final int columna, final int fila, final HojaSprites hoja){
@@ -26,7 +29,7 @@ public class Sprite {
         
         //Obtención de los valores del "Sprite"
         for (int j = 0; j < lado; j++) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < lado; i++) {
                 pixeles[i + j * lado] = hoja.pixeles[(i + this.x) + (j + this.y) * this.hoja.getAncho()];
             }
         }

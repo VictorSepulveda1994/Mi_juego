@@ -1,10 +1,15 @@
 package principal;
 
 import controles.Teclado;
+import graficos.Pantalla;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -30,17 +35,27 @@ public class Juego extends Canvas implements Runnable{
     private static int aps = 0;
     private static int fps = 0;
     
+    //Variables para posición
+    private static int x = 0;
+    private static int y = 0;
+    
     //Creación de variable "ventana"
     private static JFrame ventana;
-        
     //Creción de nuevo hilo
     private static Thread hiloGraficos;
-    
     //Creación clase teclado
     private static Teclado teclado;
+    //Creacion clase pantalla
+    private static Pantalla pantalla;
+    //Para manejar los pixeles dentro del juego
+    private static BufferedImage imagen = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
+    private static int[] pixeles = ((DataBufferInt) imagen.getRaster().getDataBuffer()).getData();
     
     //Constructor de Juego
     private Juego(){
+        //Inicialización de pantalla
+        pantalla = new Pantalla(ANCHO, ALTO);
+        
         //Inicialización del teclado y detección de teclas
         teclado = new Teclado();
         addKeyListener(teclado);
@@ -88,22 +103,43 @@ public class Juego extends Canvas implements Runnable{
         teclado.actualizar();
         
         if(teclado.arriba){
-            System.out.println("Arriba");
+            y++;
         }
         if(teclado.abajo){
-            System.out.println("Abajo");
+            y--;
         }
         if(teclado.derecha){
-            System.out.println("Derecha");
+            x--;
         }
         if(teclado.izquierda){
-            System.out.println("Izquierda");
+            x++;
         }
         
         aps++;
     }
     
     private void mostrar(){
+        BufferStrategy estrategia = getBufferStrategy();
+        
+        if(estrategia == null){
+            createBufferStrategy(3);
+            return;
+        }
+        
+        pantalla.limpiar();
+        pantalla.mostrar(x, y);
+        
+        //Copia de array pantalla a array en juego
+        System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);
+        
+        //Se dibuja la imagen
+        Graphics g = estrategia.getDrawGraphics();
+        g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
+        g.dispose();
+        
+        //Se muestra en pantalla lo dibujado
+        estrategia.show();
+        
         fps++;
     }
     
