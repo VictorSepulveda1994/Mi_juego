@@ -14,7 +14,7 @@ public class Sprite {
     public int[] pixeles;
     
     //Colección de sprites
-    public static Sprite agua = new Sprite(32, 2, 1, HojaSprites.texturasV1);
+    public static final Sprite AGUA = new Sprite(32, 2, 1, HojaSprites.texturasV1);
     //Fín de la colección
     
     //Constructor "Sprite"

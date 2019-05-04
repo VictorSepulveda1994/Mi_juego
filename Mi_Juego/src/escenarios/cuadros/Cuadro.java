@@ -13,6 +13,10 @@ public abstract class Cuadro {
     
     public Sprite sprite;
     
+    //Colección de cuadros
+    public static final Cuadro AGUA = new CuadroAgua(Sprite.AGUA);
+    //Fin de la colección
+    
     public Cuadro(Sprite sprite){
         this.sprite = sprite;
     }

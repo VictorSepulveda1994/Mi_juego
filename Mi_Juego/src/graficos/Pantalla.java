@@ -44,7 +44,7 @@ public final class Pantalla {
                 }
                 
                 //Código para redibujar(temporal)
-                pixeles[posicionX + posicionY * ancho] = Sprite.agua.pixeles[ (x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
+                pixeles[posicionX + posicionY * ancho] = Sprite.AGUA.pixeles[ (x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
             }
         }
     }
