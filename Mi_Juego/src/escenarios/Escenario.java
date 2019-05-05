@@ -33,6 +33,10 @@ public abstract class Escenario {
     public void actualizar(){
     }
     
-    public void mostrar(int compensacionX, int compensaciónY, Pantalla pantalla){
+    public void mostrar(int compensacionX, int compensacionY, Pantalla pantalla){
+        int o = compensacionX >> 5; //Division usando bit shifting
+        int e = (compensacionX + pantalla.getAncho()) >> 5;
+        int n = compensacionY >> 5;
+        int s = (compensacionY + pantalla.getAlto()) >> 5;
     }
 }
