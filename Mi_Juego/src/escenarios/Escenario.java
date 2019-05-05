@@ -35,10 +35,19 @@ public abstract class Escenario {
     }
     
     public void mostrar(final int compensacionX, final int compensacionY, final Pantalla pantalla){
+        
+        pantalla.establecerDiferencia(compensacionX, compensacionY);
+        
         int o = compensacionX >> 5; //Division usando bit shifting
         int e = (compensacionX + pantalla.getAncho()) >> 5;
         int n = compensacionY >> 5;
         int s = (compensacionY + pantalla.getAlto()) >> 5;
+        
+        for(int y = n; y < s; y++){
+            for(int x = o; x < e; x++){
+                obtenerCuadro(x, y).mostrar(x, y, pantalla);
+            }
+        }
     }
     
     public Cuadro obtenerCuadro(final int x, final int y){
@@ -49,7 +58,7 @@ public abstract class Escenario {
             case 2:
                 
             default:
-                return null;
+                return Cuadro.VACIO;
         }
     }
 }

@@ -1,6 +1,8 @@
 package principal;
 
 import controles.Teclado;
+import escenarios.Escenario;
+import escenarios.EscenarioGenerado;
 import graficos.Pantalla;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -39,14 +41,17 @@ public class Juego extends Canvas implements Runnable{
     private static int x = 0;
     private static int y = 0;
     
-    //Creación de variable "ventana"
+    //Creación objeto "ventana"
     private static JFrame ventana;
     //Creción de nuevo hilo
     private static Thread hiloGraficos;
-    //Creación clase teclado
+    //Creación objeto teclado
     private static Teclado teclado;
-    //Creacion clase pantalla
+    //Creación objeto pantalla
     private static Pantalla pantalla;
+    //Creación objeto escenario
+    private static Escenario escenario;
+    
     //Para manejar los pixeles dentro del juego
     private static BufferedImage imagen = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
     private static int[] pixeles = ((DataBufferInt) imagen.getRaster().getDataBuffer()).getData();
@@ -55,6 +60,9 @@ public class Juego extends Canvas implements Runnable{
     private Juego(){
         //Inicialización de pantalla
         pantalla = new Pantalla(ANCHO, ALTO);
+        
+        //Inicialización de escenarioGenerado
+        escenario = new EscenarioGenerado(128, 128);
         
         //Inicialización del teclado y detección de teclas
         teclado = new Teclado();
@@ -103,16 +111,16 @@ public class Juego extends Canvas implements Runnable{
         teclado.actualizar();
         
         if(teclado.arriba){
-            y++;
-        }
-        if(teclado.abajo){
             y--;
         }
+        if(teclado.abajo){
+            y++;
+        }
         if(teclado.derecha){
-            x--;
+            x++;
         }
         if(teclado.izquierda){
-            x++;
+            x--;
         }
         
         aps++;
@@ -127,7 +135,7 @@ public class Juego extends Canvas implements Runnable{
         }
         
         pantalla.limpiar();
-        pantalla.mostrar(x, y);
+        escenario.mostrar(x, y, pantalla);
         
         //Copia de array pantalla a array en juego
         System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);

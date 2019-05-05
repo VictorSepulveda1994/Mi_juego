@@ -10,12 +10,10 @@ public final class Pantalla {
     private final int ancho;
     private final int alto;
     
-    public final int[] pixeles;
+    private int diferenciaX;
+    private int diferenciaY;
     
-    //Temporal
-    private final static int LADO_SPRITE =32;
-    private final static int MASCARA_SPRITE = LADO_SPRITE - 1;
-    //Fin temporal
+    public final int[] pixeles;
     
     public Pantalla(final int ancho, final int alto){
         this.ancho = ancho;
@@ -30,29 +28,11 @@ public final class Pantalla {
             pixeles[i] = 0;
         }
     }
-    
-    //Temporal
-    public void mostrar(final int compensacionX, final int compensacionY){
-        for (int y = 0; y < alto; y++) {
-            int posicionY = y + compensacionY;
-            if(posicionY < 0 || posicionY >= alto){
-                continue;
-            }
-            
-            for (int x = 0; x < ancho; x++) {
-                int posicionX = x + compensacionX;
-                if(posicionX < 0 || posicionX >= ancho){
-                    continue;
-                }
-                
-                //Código para redibujar(temporal)
-                pixeles[posicionX + posicionY * ancho] = Sprite.AGUA.pixeles[ (x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
-            }
-        }
-    }
-    //Fin Temporal
-    
+      
     public void mostrarCuadro(int compensacionX, int compensacionY, Cuadro cuadro){
+        compensacionX -= diferenciaX;
+        compensacionY -= diferenciaY;
+        
         for (int y = 0; y < cuadro.sprite.getLado(); y++) {
             int posicionY = y + compensacionY;
             for (int x = 0; x < cuadro.sprite.getLado(); x++) {
@@ -64,7 +44,12 @@ public final class Pantalla {
             }
         }
     }
-
+    
+    public void establecerDiferencia(final int diferenciaX, final int diferenciaY){
+        this.diferenciaX = diferenciaX;
+        this.diferenciaY = diferenciaY;
+    }
+    
     public int getAncho() {
         return ancho;
     }

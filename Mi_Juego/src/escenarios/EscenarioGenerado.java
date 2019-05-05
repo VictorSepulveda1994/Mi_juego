@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class EscenarioGenerado extends Escenario{
     
-    private final Random aleatorio = new Random();
+    private static final Random ALEATORIO = new Random();
     
     public EscenarioGenerado(int ancho, int alto) {
         super(ancho, alto);
@@ -17,7 +17,7 @@ public class EscenarioGenerado extends Escenario{
     protected void generarEscenario(){
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                cuadros[x + y * ancho] = aleatorio.nextInt(3);
+                cuadros[x + y * ancho] = ALEATORIO.nextInt(3);
             }
         }
     }
