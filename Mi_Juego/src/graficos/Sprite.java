@@ -34,4 +34,10 @@ public class Sprite {
             }
         }
     }
+
+    public int getLado() {
+        return lado;
+    }
+    
+    
 }
