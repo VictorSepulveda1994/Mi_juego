@@ -7,9 +7,9 @@ import graficos.Sprite;
  *
  * @author Victor Sepulveda
  */
-public class CuadroAgua extends Cuadro{
+public class CuadroVacio extends Cuadro{
     
-    public CuadroAgua(Sprite sprite) {
+    public CuadroVacio(Sprite sprite) {
         super(sprite);
     }
     

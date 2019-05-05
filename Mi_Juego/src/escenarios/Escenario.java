@@ -1,5 +1,6 @@
 package escenarios;
 
+import escenarios.cuadros.Cuadro;
 import graficos.Pantalla;
 
 /**
@@ -33,10 +34,22 @@ public abstract class Escenario {
     public void actualizar(){
     }
     
-    public void mostrar(int compensacionX, int compensacionY, Pantalla pantalla){
+    public void mostrar(final int compensacionX, final int compensacionY, final Pantalla pantalla){
         int o = compensacionX >> 5; //Division usando bit shifting
         int e = (compensacionX + pantalla.getAncho()) >> 5;
         int n = compensacionY >> 5;
         int s = (compensacionY + pantalla.getAlto()) >> 5;
+    }
+    
+    public Cuadro obtenerCuadro(final int x, final int y){
+        switch(cuadros[x + y * ancho]){
+            case 0:
+                return Cuadro.AGUA;
+            case 1:
+            case 2:
+                
+            default:
+                return null;
+        }
     }
 }

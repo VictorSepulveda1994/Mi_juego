@@ -10,14 +10,15 @@ public class Sprite {
     private int x;
     private int y;
     
-    private final HojaSprites hoja;
+    private HojaSprites hoja;
     public int[] pixeles;
     
     //Colección de sprites
     public static final Sprite AGUA = new Sprite(32, 2, 1, HojaSprites.texturasV1);
+    public static final Sprite VACIO = new Sprite(32, 0);
     //Fín de la colección
     
-    //Constructor "Sprite"
+    //Constructor 1 de "Sprite"
     public Sprite(final int lado, final int columna, final int fila, final HojaSprites hoja){
         this.lado = lado;
         
@@ -32,6 +33,16 @@ public class Sprite {
             for (int i = 0; i < lado; i++) {
                 pixeles[i + j * lado] = hoja.pixeles[(i + this.x) + (j + this.y) * this.hoja.getAncho()];
             }
+        }
+    }
+    
+    //Constructor 2 de "Sprite"
+    public Sprite(final int lado, final int color){
+        this.lado = lado;
+        pixeles = new int[lado * lado];
+        
+        for (int i = 0; i < pixeles.length; i++) {
+            pixeles[i] = color;
         }
     }
 

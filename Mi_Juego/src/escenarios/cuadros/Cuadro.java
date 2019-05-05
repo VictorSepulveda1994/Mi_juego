@@ -15,6 +15,7 @@ public abstract class Cuadro {
     
     //Colección de cuadros
     public static final Cuadro AGUA = new CuadroAgua(Sprite.AGUA);
+    public static final Cuadro VACIO = new CuadroVacio(Sprite.VACIO);
     //Fin de la colección
     
     public Cuadro(Sprite sprite){
