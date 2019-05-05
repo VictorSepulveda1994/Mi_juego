@@ -13,6 +13,8 @@ public abstract class Cuadro {
     
     public Sprite sprite;
     
+    public static final int LADO = 32;
+    
     //Colección de cuadros
     public static final Cuadro AGUA = new CuadroAgua(Sprite.AGUA);
     public static final Cuadro VACIO = new CuadroVacio(Sprite.VACIO);

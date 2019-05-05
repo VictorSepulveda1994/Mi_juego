@@ -39,9 +39,9 @@ public abstract class Escenario {
         pantalla.establecerDiferencia(compensacionX, compensacionY);
         
         int o = compensacionX >> 5; //Division usando bit shifting
-        int e = (compensacionX + pantalla.getAncho()) >> 5;
+        int e = (compensacionX + pantalla.getAncho() + Cuadro.LADO) >> 5;
         int n = compensacionY >> 5;
-        int s = (compensacionY + pantalla.getAlto()) >> 5;
+        int s = (compensacionY + pantalla.getAlto() + Cuadro.LADO) >> 5;
         
         for(int y = n; y < s; y++){
             for(int x = o; x < e; x++){
@@ -51,6 +51,9 @@ public abstract class Escenario {
     }
     
     public Cuadro obtenerCuadro(final int x, final int y){
+        if(x < 0 || y < 0 || x >= ancho || y >= alto){
+            return Cuadro.VACIO;
+        }
         switch(cuadros[x + y * ancho]){
             case 0:
                 return Cuadro.AGUA;
