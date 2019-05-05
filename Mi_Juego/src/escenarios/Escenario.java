@@ -7,10 +7,10 @@ import graficos.Pantalla;
  * @author Victor Sepulveda
  */
 public abstract class Escenario {
-    private int ancho;
-    private int alto;
+    protected int ancho;
+    protected int alto;
     
-    private int[] cuadros;
+    protected int[] cuadros;
     
     public Escenario(int ancho, int alto){
         this.ancho = ancho;
@@ -24,7 +24,7 @@ public abstract class Escenario {
         cargarEscenario(ruta);
     }
 
-    private void generarEscenario() {
+    protected void generarEscenario() {
     }
 
     private void cargarEscenario(String ruta) {
