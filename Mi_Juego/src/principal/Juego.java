@@ -6,6 +6,7 @@ import escenarios.EscenarioGenerado;
 import graficos.Pantalla;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -32,6 +33,10 @@ public class Juego extends Canvas implements Runnable{
     
     //Nombre de la ventana
     private static final String NOMBRE ="Final War";
+    
+    //Strings para los APS y FPS
+    private static String CONTADOR_APS = "";
+    private static String CONTADOR_FPS = "";
     
     //Variables "aps" y "fps"
     private static int aps = 0;
@@ -76,7 +81,7 @@ public class Juego extends Canvas implements Runnable{
         ventana.setLayout(new BorderLayout());
         ventana.add(this, BorderLayout.CENTER);
         //Sin adornos en la ventana
-        //ventana.setUndecorated(true);
+        ventana.setUndecorated(true);
         ventana.pack();
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
@@ -122,6 +127,9 @@ public class Juego extends Canvas implements Runnable{
         if(teclado.izquierda){
             x--;
         }
+        if(teclado.salir){
+            System.exit(0);
+        }
         
         aps++;
     }
@@ -143,6 +151,10 @@ public class Juego extends Canvas implements Runnable{
         //Se dibuja la imagen
         Graphics g = estrategia.getDrawGraphics();
         g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(Color.white);
+        g.fillRect(ANCHO / 2, ALTO / 2, 32, 32);
+        g.drawString(CONTADOR_APS, 10, 20);
+        g.drawString(CONTADOR_FPS, 10, 35);
         g.dispose();
         
         //Se muestra en pantalla lo dibujado
@@ -180,7 +192,10 @@ public class Juego extends Canvas implements Runnable{
             mostrar();
             
             if(System.nanoTime() - referenciaContador > NS_POR_SEGUNDO){
-                ventana.setTitle(NOMBRE + " || APS: " + aps + " || FPS:" + fps);
+                //ventana.setTitle(NOMBRE + " || APS: " + aps + " || FPS:" + fps);
+                CONTADOR_APS = "APS: " + aps;
+                CONTADOR_FPS = "FPS: " + fps;
+                
                 aps = 0;
                 fps = 0;
                 referenciaContador = System.nanoTime();
